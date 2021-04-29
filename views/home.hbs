@@ -1,1 +1,7 @@
-<h1>coucou c'est re moi dans le body</h1>
+<h1>Page home</h1>
+
+  {{#each films.results}}
+
+        <li><a href="/film/{{this.id}}">{{capitalize this.original_title}}</li></a>
+
+{{/each}}

@@ -1,0 +1,7 @@
+<h1>Page kids</h1>
+
+  {{#each films.results}}
+
+        <li><a href="/fiche_kids/{{this.id}}">{{capitalize this.original_title}}</li></a>
+
+{{/each}}

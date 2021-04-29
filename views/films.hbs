@@ -1,0 +1,16 @@
+<h1>Page films</h1>
+
+  {{#each films.results}}
+
+        <li><a href="/fiche_film/{{this.id}}">{{capitalize this.original_title}}</li></a>
+        <li>{{this.release_date}}</li>
+        <li>{{this.overview}}</li>
+
+  {{!-- {{#each this.genre_ids}}
+
+        <li>{{this}}</li>
+
+
+{{/each}} --}}
+
+{{/each}}
