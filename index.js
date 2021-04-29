@@ -61,7 +61,7 @@ const getAllMovies = async() => {
 // recherche un film (se produit au clic sur un film)
 const getMovie = async(film = '460465') => {
     try {
-        //on appelle l'api en fonction du film recherché
+        //on appelle les données en fonction du film recherché
         const res = await fetch(`https://api.themoviedb.org/3/movie/${film}?api_key=${ApiKey}`)
 
         const json = await res.json()
@@ -73,14 +73,11 @@ const getMovie = async(film = '460465') => {
     }
 }
 
-
-//recupérer toutes les images
-const recupAllImage = async() => {
+// recherche les recommandations par rapport à un film
+const getRecommendations = async(film = '460465') => {
     try {
-
-        let url = `https://api.themoviedb.org/3/movie/${film}/images?api_key=${ApiKey}`
-
-        const res = await fetch(url)
+        //on appelle les données en fonction du film recherché
+        const res = await fetch(`https://api.themoviedb.org/3/movie/${film}/recommendations?api_key=${ApiKey}`)
 
         const json = await res.json()
 
@@ -90,6 +87,49 @@ const recupAllImage = async() => {
         console.log(err)
     }
 }
+
+const getActeurs = async(film = '460465') => {
+    try {
+        //on appelle les acteurs en fonction du film recherché
+        const res = await fetch(`https://api.themoviedb.org/3/movie/${film}/credits?api_key=${ApiKey}`)
+
+        const json = await res.json()
+
+        return json
+
+    } catch (err) {
+        console.log(err)
+    }
+}
+
+const getBandeAnnonce = async(film = '460465') => {
+    try {
+        //on appelle la bande annonce en fonction du film recherché
+        const res = await fetch(`https://api.themoviedb.org/3/movie/${film}}/videos?api_key=${ApiKey}`)
+
+        const json = await res.json()
+
+        return json
+
+    } catch (err) {
+        console.log(err)
+    }
+}
+
+const getActeur = async(acteur = '287') => {
+    try {
+        //on appelle les acteurs en fonction du film recherché
+        const res = await fetch(`https://api.themoviedb.org/3/person/${acteur}?api_key=${ApiKey}`)
+
+        const json = await res.json()
+
+        return json
+
+    } catch (err) {
+        console.log(err)
+    }
+}
+
 
 const recupImage = async(film = '460465') => {
     try {
@@ -114,6 +154,22 @@ const getKidsMovies = async() => {
     try {
         //on appelle l'api en fonction des acteurs
         const res = await fetch(`https://api.themoviedb.org/3/discover/movie?api_key=${ApiKey}&primary_release_date.gte=2021-04-01&primary_release_date.lte=2021-04-02`)
+
+        const json = await res.json()
+
+        return json
+
+    } catch (err) {
+        console.log(err)
+    }
+}
+
+// methode de recherche
+const getSearchMovies = async(search) => {
+
+    try {
+        //on appelle l'api en fonction des acteurs
+        const res = await fetch(`https://api.themoviedb.org/3/search/movie?api_key=${ApiKey}&query=${search}&page=1`)
 
         const json = await res.json()
 
@@ -161,14 +217,39 @@ app.get('/fiche_film/:film', async(req, res) => {
     try {
         const search = req.params.film
         const film = await getMovie(search)
+        const recommendations = await getRecommendations(search)
+        const acteurs = await getActeurs(search)
+        const ba = await getBandeAnnonce(search)
 
         const img = await recupImage(search)
         const imgURL = img.posters[0].file_path
 
-        const compagnie = film.production_companies[0].name
+        const compagnie = film.production_companies
+        const genres = film.genres
+
+        const acteur = acteurs.cast
+        const bandeAnnonce = ba.results[0].key
+
+        res.render('fiche_film', { film, imgURL, compagnie, genres, acteur, recommendations, bandeAnnonce })
 
 
-        res.render('fiche_film.hbs', { film, imgURL, compagnie })
+    } catch (err) {
+        console.log(err)
+    }
+})
+
+
+//on récupère un acteur précis
+app.get('/fiche_acteur/:acteur', async(req, res) => {
+
+    try {
+        const search = req.params.acteur
+        const acteur = await getActeur(search)
+
+        const filmsActeur = acteur.also_know_as
+
+        res.render('fiche_acteur', { acteur, filmsActeur })
+
 
     } catch (err) {
         console.log(err)
@@ -183,6 +264,7 @@ app.get('/kids', async(req, res) => {
     try {
 
         const films = await getKidsMovies()
+
         res.render('films', { films })
 
     } catch (err) {
@@ -202,6 +284,25 @@ app.get('/notFound', (req, res) => {
 app.get('/contact', (req, res) => {
     res.render('contact')
 })
+
+
+//récupérer l'entrée dans la barre de recherche
+app.post('/search', async(req, res) => {
+    try {
+        // on récupère le champs avec le name search
+        const search = req.body.search
+
+        // on appelle la fonction de recherche
+        const films = await getSearchMovies(search)
+
+        // on renvoie vers la page du film chercher
+        res.render(`films`, { films })
+
+    } catch (err) {
+        console.log(err)
+    }
+})
+
 
 
 // On ouvre le serveur

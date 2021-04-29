@@ -10,7 +10,9 @@
             <div class="col-4">
                 <div class="card">
                     <!--Image du film-->
+                    <a href="/fiche_film/{{this.id}}">
                     <img class="card-img-top" src="https://image.tmdb.org/t/p/w500{{this.poster_path}}" alt="Card image cap">
+                    </a>
                     <div class="card-body">
                         <!--Info film : Titre + texte-->
                         <a href="/fiche_film/{{this.id}}">
@@ -21,12 +23,6 @@
                     </div>
                 </div>
             </div>
-            {{!-- <li>{{this.overview}}</li> --}}
-
-            {{!-- {{#each this.genre_ids}}
-            <li>{{this}}</li>
-            {{/each}} --}}
-
 
             {{/each}}
         </div>

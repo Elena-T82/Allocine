@@ -1,19 +1,94 @@
+<!--Contenu fiche de film-->
 
+<div class="card mb-3">
+    <!--Titre du film-->
+    <h3 class="card-header">{{film.original_title}}</h3>
+    <!--Affiche du film -->
+    <div class="row mt-5">
+        <div class="col-5 text-center">
+            <img src="https://image.tmdb.org/t/p/w500{{imgURL}}" alt="image"><br>
+            <button onclick="document.getElementById('id01').style.display='block'" class="w3-button w3-black">Bande annonce</button>
+            <div id="id01" class="w3-modal">
+                <div class="w3-modal-content">
+                    <div class="w3-container">
+                        <span onclick="fermerBA()"
+                            class="w3-button w3-display-topright">&times;</span>
+                        <iframe id="ba" width="820" height="500" src="https://www.youtube.com/embed/{{bandeAnnonce}}">
+                        </iframe>
+                    </div>
+                </div>
+            </div>
 
-    <!--Contenu fiche de film-->
-
-    <div class="card mb-3">
-        <!--Titre du film-->
-        <h3 class="card-header">{{film.original_title}}</h3>
-        <!--Affiche du film -->
-        <img src="https://image.tmdb.org/t/p/w500{{imgURL}}" alt="image">
-        <div class="card-body">
-            <!--Information du films-->
-            <p class="card-text">Date de sortie du film : {{film.release_date}}</p>
-            <p class="card-text">Tag : {{film.tagline}}</p>
-            <p class="card-text">Production : {{compagnie}}</p>
-            <p class="card-text">Synopsis : {{film.overview}}</p>
         </div>
+        <div class="col-6">
+            <div class="row">
+                <div class="col-12">
+                    <div class="card-body">
+                        <!--Information du films-->
+                        <p class="card-text">Genre(s) :
+                            {{#each genres}}
 
+                            {{this.name}},
+
+                            {{/each}}
+
+                        </p>
+                        <p class="card-text">Date de sortie du film : {{film.release_date}}</p>
+                        <p class="card-text">Synopsis : {{film.overview}}</p>
+                        <p class="card-text">Tag : {{film.tagline}}</p>
+                        <p class="card-text">Production :
+                            {{#each compagnie}}
+
+                            {{this.name}},
+
+                            {{/each}}
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                {{#each acteur}}
+                <div class="col-2">
+                    <div class="card-body">
+                        <!--Information des acteurs -->
+
+                        <a href="/fiche_acteur/{{this.id}}">
+                            <img class="card-img-top" src="https://image.tmdb.org/t/p/w500{{this.profile_path}}"
+                                alt="Card image cap">
+
+                            {{this.name}} ({{this.character}})<br>
+                        </a>
+                    </div>
+                </div>
+                {{/each}}
+
+            </div>
+        </div>
     </div>
+    <hr>
+    <h2 class="text-center">Vous pourriez aimer...</h3>
+        <div class="row">
+            {{#each recommendations.results}}
 
+            <div class="col-2">
+                <div class="card-body">
+                    <a href="/fiche_film/{{this.id}}">
+                        <img class="card-img-top" src="https://image.tmdb.org/t/p/w500{{this.poster_path}}"
+                            alt="Card image cap">
+
+                    </a>
+                </div>
+            </div>
+
+            {{/each}}
+        </div>
+</div>
+
+<script>
+    function fermerBA() {
+        document.getElementById('id01').style.display='none'
+        var source = document.getElementById("ba").getAttribute("src");
+        document.getElementById("ba").setAttribute("src", source);
+    }
+</script>

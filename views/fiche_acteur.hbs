@@ -1,0 +1,28 @@
+<!--Contenu fiche de film-->
+
+<div class="card mb-3">
+    <!--Titre du film-->
+    <h3 class="card-header">{{acteur.name}}</h3>
+    <!--Affiche du film -->
+    <div class="row mt-5">
+        <div class="col-5 text-center">
+            <img src="https://image.tmdb.org/t/p/w500{{acteur.profile_path}}" alt="{{acteur.name}}">
+        </div>
+        <div class="col-6">
+            <div class="card-body">
+                <!--Information du films-->
+                <p class="card-text">Autres films :
+                    {{#each filmsActeur}}
+
+                    {{this}},
+
+                    {{/each}}
+
+                </p>
+                <p class="card-text">Date de naissance : {{acteur.birthday}}</p>
+                <p class="card-text">Biography : {{acteur.biography}}</p>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
