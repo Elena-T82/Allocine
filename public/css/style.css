@@ -1,0 +1,25 @@
+/*Page d'accueil accueil*/
+
+h1 {
+    text-align: center;
+    margin-top: 40px;
+    margin-bottom: 40px;
+}
+
+
+/*Card - Affiche de films*/
+
+.card {
+    margin: 20px;
+}
+
+
+/*Page formulaire de contact*/
+
+.form-group {
+    margin: 80px;
+}
+
+.buttonSend {
+    margin: 80px;
+}

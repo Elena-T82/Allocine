@@ -1,0 +1,35 @@
+
+    <!--Formulaire de contact-->
+
+    <form>
+        <fieldset>
+            <h1>Contactez nous !</h1>
+
+            <!--Utilisateur entre son mail-->
+            <div class="form-group">
+                <label for="exampleInputEmail1">Email *</label>
+                <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Entrer votre email">
+                <small id="emailHelp" class="form-text text-muted">Nous ne partagerons jamais votre adresse électronique avec qui que ce soit.</small>
+
+                <!--Formulaire déroulant-->
+                <label for="exampleSelect1">Type de demande</label>
+                <select class="form-control" id="exampleSelect1">
+                  <option>Bug technique</option>
+                  <option>Suggérer une amélioration</option>
+                  <option>Signaler un abus</option>
+                  <option>Contactez la rédaction</option>
+                  <option>Contactez le pôle de communication</option>
+                </select>
+
+                <!--Utilisateur entre sa demande-->
+                <label for="exampleTextarea">Description</label>
+                <textarea class="form-control" id="exampleTextarea" rows="3"></textarea>
+            </div>
+
+            <!--Bouton d'envoi de la demande-->
+            <div class="buttonSend">
+                <button type="submit" class="btn btn-primary">Envoyer la demande</button>
+            </div>
+        </fieldset>
+    </form>
+

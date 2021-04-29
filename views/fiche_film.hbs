@@ -1,72 +1,3 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <meta name="Description" content="Site d'actualité de cinéma" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/4.6.0/slate/bootstrap.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css">
-    <link rel="stylesheet" href="Assets/css/style.css">
-    <link rel="shortcut icon" type="image/png" href="Maquettes/Logo/Fichier 3@2x6.png" />
-
-    <title>AlloCiné</title>
-</head>
-
-
-<body>
-    <!--Bannière site-->
-    {{!-- <header class="banner" role="banner">
-        <div class="container">
-            <div class="row pt-5 mb-5">
-                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
-                    <img src="Maquettes/Logo/Logo_ticket_blanc.png">
-                </div>
-                <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
-                    <form class="form-inline my-2 my-lg-0">
-                        <input class="form-control mr-sm-2" type="text" placeholder="Un film, un acteur...">
-                        <button class="btn btn-secondary my-2 my-sm-0" type="submit">Recherche</button>
-                    </form>
-                </div>
-
-            </div>
-        </div>
-    </header> --}}
-
-    <!--Navbar-->
-
-    {{!-- <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <!--<a class="navbar-brand" href="#">Navbar</a>-->
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor02" aria-controls="navbarColor02" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-
-        <div class="row d-flex justify-content-center">
-            <div class="col-lg-12  ">
-                <div class="collapse navbar-collapse" id="navbarColor02">
-
-                    <ul class="navbar-nav mr-auto">
-                        <li class="nav-item active">
-                            <a class="nav-link" href="index.html">Home
-                            <span class="sr-only">(current)</span>
-                        </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="films.html">Films</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="kids.html">Kids</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="contact.html">Contact</a>
-                        </li>
-
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </nav> --}}
 
 
     <!--Contenu fiche de film-->
@@ -74,41 +5,15 @@
     <div class="card mb-3">
         <!--Titre du film-->
         <h3 class="card-header">{{film.original_title}}</h3>
-        <!--Affiche du film-->
-        <svg xmlns="http://www.w3.org/2000/svg" class="d-block user-select-none" width="100%" height="200" aria-label="Placeholder: Image cap" focusable="false" role="img" preserveAspectRatio="xMidYMid slice" viewBox="0 0 318 180" style="font-size:1.125rem;text-anchor:middle">
-          <rect width="100%" height="100%" fill="#868e96"></rect>
-          <text x="50%" y="50%" fill="#dee2e6" dy=".3em">Image cap</text>
-        </svg>
+        <!--Affiche du film -->
+        <img src="https://image.tmdb.org/t/p/w500{{imgURL}}" alt="image">
         <div class="card-body">
             <!--Information du films-->
-            <p class="card-text">Infos film (type durée etc...)</p>
+            <p class="card-text">Date de sortie du film : {{film.release_date}}</p>
+            <p class="card-text">Tag : {{film.tagline}}</p>
+            <p class="card-text">Production : {{compagnie}}</p>
+            <p class="card-text">Synopsis : {{film.overview}}</p>
         </div>
-        <ul class="list-group list-group-flush">
-            <!--sypnosis-->
-            <li class="list-group-item">{{film.overview}}</li>
-
-        </ul>
 
     </div>
 
-    <!--Footer-->
-
-    {{!-- <!-- Footer -->
-    <footer class="bg-light text-center text-lg-start">
-
-
-        <!-- Copyright -->
-        <div class="text-center p-3" style="background-color: rgb(39, 43, 48);">
-            © 2021 - AlloCiné - La Manu
-
-        </div>
-        <!-- Copyright -->
-    </footer>
-    <!-- Footer --> --}}
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.slim.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.1/umd/popper.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/js/bootstrap.min.js"></script>
-</body>
-
-</html>

@@ -74,6 +74,40 @@ const getMovie = async(film = '460465') => {
 }
 
 
+//recupérer toutes les images
+const recupAllImage = async() => {
+    try {
+
+        let url = `https://api.themoviedb.org/3/movie/${film}/images?api_key=${ApiKey}`
+
+        const res = await fetch(url)
+
+        const json = await res.json()
+
+        return json
+
+    } catch (err) {
+        console.log(err)
+    }
+}
+
+const recupImage = async(film = '460465') => {
+    try {
+        //on appelle l'api en fonction du film recherché
+        let url = `https://api.themoviedb.org/3/movie/${film}/images?api_key=${ApiKey}`
+
+        const res = await fetch(url)
+
+        const json = await res.json()
+
+        return json
+
+    } catch (err) {
+        console.log(err)
+    }
+}
+
+
 // liste tous les films pour enfant
 const getKidsMovies = async() => {
 
@@ -128,7 +162,13 @@ app.get('/fiche_film/:film', async(req, res) => {
         const search = req.params.film
         const film = await getMovie(search)
 
-        res.render('fiche_film.hbs', { film })
+        const img = await recupImage(search)
+        const imgURL = img.posters[0].file_path
+
+        const compagnie = film.production_companies[0].name
+
+
+        res.render('fiche_film.hbs', { film, imgURL, compagnie })
 
     } catch (err) {
         console.log(err)
@@ -139,31 +179,16 @@ app.get('/fiche_film/:film', async(req, res) => {
 
 
 // on défini la page film enfant -> tous les films enfants
-app.get('/kidsmovies', async(req, res) => {
+app.get('/kids', async(req, res) => {
     try {
 
         const films = await getKidsMovies()
-        res.render('kidsmovies', { films })
+        res.render('films', { films })
 
     } catch (err) {
         console.log(err)
     }
 
-})
-
-
-//on récupère un film pour enfant au clic
-app.get('/fiche_kids/:film', async(req, res) => {
-
-    try {
-        const search = req.params.film
-        const film = await getMovie(search)
-
-        res.render('fiche_kids.hbs', { film })
-
-    } catch (err) {
-        console.log(err)
-    }
 })
 
 
@@ -173,6 +198,10 @@ app.get('/notFound', (req, res) => {
     res.render('notFound')
 })
 
+// redirection en cas d'erreur 404
+app.get('/contact', (req, res) => {
+    res.render('contact')
+})
 
 
 // On ouvre le serveur

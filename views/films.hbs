@@ -1,16 +1,38 @@
-<h1>Page films</h1>
-
-  {{#each films.results}}
-
-        <li><a href="/fiche_film/{{this.id}}">{{capitalize this.original_title}}</li></a>
-        <li>{{this.release_date}}</li>
-        <li>{{this.overview}}</li>
-
-  {{!-- {{#each this.genre_ids}}
-
-        <li>{{this}}</li>
 
 
-{{/each}} --}}
+    <!--Première rangée de sortie de films-->
 
-{{/each}}
+
+    <div class="card-group">
+        <div class="row">
+            {{#each films.results}}
+
+            <div class="col-4">
+                <div class="card">
+                    <!--Image du film-->
+                    <img class="card-img-top" src="https://image.tmdb.org/t/p/w500{{this.poster_path}}" alt="Card image cap">
+                    <div class="card-body">
+                        <!--Info film : Titre + texte-->
+                        <a href="/fiche_film/{{this.id}}">
+                            <h5 class="card-title">{{this.original_title}}</h5>
+                        </a>
+                        <p class="card-text">{{this.overview}}</p>
+                        <p class="card-text"><small class="text-muted">Date de sortie : {{this.release_date}}</small></p>
+                    </div>
+                </div>
+            </div>
+            {{!-- <li>{{this.overview}}</li> --}}
+
+            {{!-- {{#each this.genre_ids}}
+            <li>{{this}}</li>
+            {{/each}} --}}
+
+
+            {{/each}}
+        </div>
+
+    </div>
+
+
+
+
