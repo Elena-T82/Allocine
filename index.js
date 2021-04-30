@@ -9,6 +9,7 @@ require('dotenv').config() // permet les variables d'environnement
 const PORT = process.env.PORT || 3000 //on choisi le port de notre serveur, soit un port défini dans une variable environnement, soit le port 3000
 
 const ApiKey = process.env.API
+const language = process.env.LANGUAGE
 
 
 const app = express() //on crée notre appli
@@ -31,7 +32,7 @@ const getAllMomentMovies = async() => {
     try {
 
         // On appelle l'api
-        const res = await fetch(`https://api.themoviedb.org/3/movie/upcoming?api_key=${ApiKey}&sort_by=popularity.desc`)
+        const res = await fetch(`https://api.themoviedb.org/3/movie/upcoming?api_key=${ApiKey}&sort_by=popularity.desc&language=${language}`)
 
         const json = await res.json()
 
@@ -47,7 +48,7 @@ const getAllMovies = async() => {
     try {
 
         // On appelle l'api
-        const res = await fetch(`https://api.themoviedb.org/3/discover/movie?api_key=${ApiKey}&page=1`)
+        const res = await fetch(`https://api.themoviedb.org/3/discover/movie?api_key=${ApiKey}&page=1&language=${language}`)
 
         const json = await res.json()
 
@@ -62,7 +63,7 @@ const getAllMovies = async() => {
 const getMovie = async(film = '460465') => {
     try {
         //on appelle les données en fonction du film recherché
-        const res = await fetch(`https://api.themoviedb.org/3/movie/${film}?api_key=${ApiKey}`)
+        const res = await fetch(`https://api.themoviedb.org/3/movie/${film}?api_key=${ApiKey}&language=${language}`)
 
         const json = await res.json()
 
@@ -77,7 +78,7 @@ const getMovie = async(film = '460465') => {
 const getRecommendations = async(film = '460465') => {
     try {
         //on appelle les données en fonction du film recherché
-        const res = await fetch(`https://api.themoviedb.org/3/movie/${film}/recommendations?api_key=${ApiKey}`)
+        const res = await fetch(`https://api.themoviedb.org/3/movie/${film}/recommendations?api_key=${ApiKey}&language=${language}`)
 
         const json = await res.json()
 
@@ -91,7 +92,7 @@ const getRecommendations = async(film = '460465') => {
 const getActeurs = async(film = '460465') => {
     try {
         //on appelle les acteurs en fonction du film recherché
-        const res = await fetch(`https://api.themoviedb.org/3/movie/${film}/credits?api_key=${ApiKey}`)
+        const res = await fetch(`https://api.themoviedb.org/3/movie/${film}/credits?api_key=${ApiKey}&&language=${language}`)
 
         const json = await res.json()
 
@@ -105,7 +106,7 @@ const getActeurs = async(film = '460465') => {
 const getBandeAnnonce = async(film = '460465') => {
     try {
         //on appelle la bande annonce en fonction du film recherché
-        const res = await fetch(`https://api.themoviedb.org/3/movie/${film}}/videos?api_key=${ApiKey}`)
+        const res = await fetch(`https://api.themoviedb.org/3/movie/${film}}/videos?api_key=${ApiKey}&language=${language}`)
 
         const json = await res.json()
 
@@ -119,7 +120,7 @@ const getBandeAnnonce = async(film = '460465') => {
 const getActeur = async(acteur = '287') => {
     try {
         //on appelle les acteurs en fonction du film recherché
-        const res = await fetch(`https://api.themoviedb.org/3/person/${acteur}?api_key=${ApiKey}`)
+        const res = await fetch(`https://api.themoviedb.org/3/person/${acteur}?api_key=${ApiKey}&language=${language}`)
 
         const json = await res.json()
 
@@ -153,7 +154,7 @@ const getKidsMovies = async() => {
 
     try {
         //on appelle l'api en fonction des acteurs
-        const res = await fetch(`https://api.themoviedb.org/3/discover/movie?api_key=${ApiKey}&primary_release_date.gte=2021-04-01&primary_release_date.lte=2021-04-02`)
+        const res = await fetch(`https://api.themoviedb.org/3/discover/movie?api_key=${ApiKey}&with_genres=16&language=${language}`)
 
         const json = await res.json()
 
@@ -169,7 +170,7 @@ const getSearchMovies = async(search) => {
 
     try {
         //on appelle l'api en fonction des acteurs
-        const res = await fetch(`https://api.themoviedb.org/3/search/movie?api_key=${ApiKey}&query=${search}&page=1`)
+        const res = await fetch(`https://api.themoviedb.org/3/search/movie?api_key=${ApiKey}&query=${search}&page=1&language=${language}`)
 
         const json = await res.json()
 
@@ -230,7 +231,12 @@ app.get('/fiche_film/:film', async(req, res) => {
         const acteur = acteurs.cast
         const bandeAnnonce = ba.results[0].key
 
-        res.render('fiche_film', { film, imgURL, compagnie, genres, acteur, recommendations, bandeAnnonce })
+        if (bandeAnnonce) {
+
+            res.render('fiche_film', { film, imgURL, compagnie, genres, acteur, recommendations, bandeAnnonce })
+        } else {
+            res.render('fiche_film', { film, imgURL, compagnie, genres, acteur, recommendations })
+        }
 
 
     } catch (err) {
