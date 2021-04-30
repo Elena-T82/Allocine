@@ -223,13 +223,14 @@ app.get('/fiche_film/:film', async(req, res) => {
         const ba = await getBandeAnnonce(search)
 
         const img = await recupImage(search)
-        const imgURL = img.posters[0].file_path
+            // const imgURL = img.posters[0].file_path
 
         const compagnie = film.production_companies
         const genres = film.genres
 
         const acteur = acteurs.cast
         var bandeAnnonce = 1
+        var imgURL = 1
 
         if (ba.results[0] == null) {
             bandeAnnonce = 0
@@ -237,11 +238,17 @@ app.get('/fiche_film/:film', async(req, res) => {
             bandeAnnonce = ba.results[0].key
         }
 
+        if (img.posters[0] == null) {
+            imgURL = 0
+        } else {
+            imgURL = img.posters[0].file_path
+
+        }
         if (imgURL == "") {
             imgURL = 0
         }
 
-        // console.log(bandeAnnonce)
+        // console.log(imgURL)
 
         res.render('fiche_film', { film, imgURL, compagnie, genres, acteur, recommendations, bandeAnnonce })
 
