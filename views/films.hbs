@@ -1,34 +1,35 @@
+<!--Première rangée de sortie de films-->
 
 
-    <!--Première rangée de sortie de films-->
+<div class="card-group">
+    <div class="row">
+        {{#each films.results}}
 
-
-    <div class="card-group">
-        <div class="row">
-            {{#each films.results}}
-
-            <div class="col-4">
-                <div class="card">
-                    <!--Image du film-->
+        <div class="col-4">
+            <div class="card">
+                <!--Image du film-->
+                <a href="/fiche_film/{{this.id}}">
+                    {{#if this.poster_path}}
+                    <img class="card-img-top" src="https://image.tmdb.org/t/p/w500{{this.poster_path}}"
+                        alt="{{this.original_title}}">
+                    {{/if}}
+                    {{#unless this.poster_path}}
+                    <img class="card-img-top" src="img/movie.jpg"
+                        alt="{{this.original_title}}">
+                    {{/unless}}
+                </a>
+                <div class="card-body">
+                    <!--Info film : Titre + texte-->
                     <a href="/fiche_film/{{this.id}}">
-                    <img class="card-img-top" src="https://image.tmdb.org/t/p/w500{{this.poster_path}}" alt="Card image cap">
+                        <h5 class="card-title">{{this.original_title}}</h5>
                     </a>
-                    <div class="card-body">
-                        <!--Info film : Titre + texte-->
-                        <a href="/fiche_film/{{this.id}}">
-                            <h5 class="card-title">{{this.original_title}}</h5>
-                        </a>
-                        <p class="card-text">{{this.overview}}</p>
-                        <p class="card-text"><small class="text-muted">Date de sortie : {{this.release_date}}</small></p>
-                    </div>
+                    <p class="card-text">{{this.overview}}</p>
+                    <p class="card-text"><small class="text-muted">Date de sortie : {{this.release_date}}</small></p>
                 </div>
             </div>
-
-            {{/each}}
         </div>
 
+        {{/each}}
     </div>
 
-
-
-
+</div>

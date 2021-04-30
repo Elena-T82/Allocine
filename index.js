@@ -120,7 +120,7 @@ const getBandeAnnonce = async(film = '460465') => {
 const getActeur = async(acteur = '287') => {
     try {
         //on appelle les acteurs en fonction du film recherché
-        const res = await fetch(`https://api.themoviedb.org/3/person/${acteur}?api_key=${ApiKey}&language=${language}`)
+        const res = await fetch(`https://api.themoviedb.org/3/person/${acteur}?api_key=${ApiKey}`)
 
         const json = await res.json()
 
@@ -229,14 +229,21 @@ app.get('/fiche_film/:film', async(req, res) => {
         const genres = film.genres
 
         const acteur = acteurs.cast
-        const bandeAnnonce = ba.results[0].key
+        var bandeAnnonce = 1
 
-        if (bandeAnnonce) {
-
-            res.render('fiche_film', { film, imgURL, compagnie, genres, acteur, recommendations, bandeAnnonce })
+        if (ba.results[0] == null) {
+            bandeAnnonce = 0
         } else {
-            res.render('fiche_film', { film, imgURL, compagnie, genres, acteur, recommendations })
+            bandeAnnonce = ba.results[0].key
         }
+
+        if (imgURL == "") {
+            imgURL = 0
+        }
+
+        // console.log(bandeAnnonce)
+
+        res.render('fiche_film', { film, imgURL, compagnie, genres, acteur, recommendations, bandeAnnonce })
 
 
     } catch (err) {

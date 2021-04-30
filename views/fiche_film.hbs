@@ -6,26 +6,38 @@
     <!--Affiche du film -->
     <div class="row mt-5">
         <div class="col-5 text-center">
-            <img src="https://image.tmdb.org/t/p/w500{{imgURL}}" alt="image"><br>
-            <button onclick="document.getElementById('id01').style.display='block'" class="w3-button w3-black">Bande annonce</button>
+            {{#if film.poster_path}}
+            <img src="https://image.tmdb.org/t/p/w500{{imgURL}}" alt="image">
+            {{/if}}
+            {{#unless film.poster_path}}
+            <img src="img/movie.jpg" alt="image">
+
+            {{/unless}}
+            <br>
+            <button onclick="document.getElementById('id01').style.display='block'" class="w3-button w3-black mt-5">Bande annonce</button>
             <div id="id01" class="w3-modal">
                 <div class="w3-modal-content">
                     <div class="w3-container">
                         <span onclick="fermerBA()"
                             class="w3-button w3-display-topright">&times;</span>
+                        {{#if bandeAnnonce}}
                         <iframe id="ba" width="820" height="500" src="https://www.youtube.com/embed/{{bandeAnnonce}}">
                         </iframe>
+                        {{/if}}
+                        {{#unless bandeAnnonce}}
+                        <p>Aucune bande annonce</p>
+                        {{/unless}}
                     </div>
                 </div>
             </div>
 
         </div>
-        <div class="col-6">
+        <div class="col-7 mx-auto">
             <div class="row">
                 <div class="col-12">
                     <div class="card-body">
                         <!--Information du films-->
-                        <p class="card-text">Genre(s) :
+                        <p class="card-text"><span class="text-white">Genre(s) :</span>
                             {{#each genres}}
 
                             {{this.name}},
@@ -33,10 +45,10 @@
                             {{/each}}
 
                         </p>
-                        <p class="card-text">Date de sortie du film : {{film.release_date}}</p>
-                        <p class="card-text">Synopsis : {{film.overview}}</p>
-                        <p class="card-text">Tag : {{film.tagline}}</p>
-                        <p class="card-text">Production :
+                        <p class="card-text"><span class="text-white">Date de sortie du film : </span>{{film.release_date}}</p>
+                        <p class="card-text"><span class="text-white">Synopsis : </span>{{film.overview}}</p>
+                        <p class="card-text"><span class="text-white">Tag : </span>{{film.tagline}}</p>
+                        <p class="card-text"><span class="text-white">Production : </span>
                             {{#each compagnie}}
 
                             {{this.name}},
@@ -46,10 +58,10 @@
                     </div>
                 </div>
             </div>
-
-            <div class="row">
+    
+            <div class="row overflow-hidden" style="height: 625px; margin-bottom: 50px">
                 {{#each acteur}}
-                <div class="col-2">
+                <div class="col-3">
                     <div class="card-body">
                         <!--Information des acteurs -->
 
@@ -57,7 +69,7 @@
                             <img class="card-img-top" src="https://image.tmdb.org/t/p/w500{{this.profile_path}}"
                                 alt="Card image cap">
 
-                            {{this.name}} ({{this.character}})<br>
+                            {{this.name}}<br> ({{this.character}})<br>
                         </a>
                     </div>
                 </div>
@@ -76,7 +88,7 @@
                     <a href="/fiche_film/{{this.id}}">
                         <img class="card-img-top" src="https://image.tmdb.org/t/p/w500{{this.poster_path}}"
                             alt="Card image cap">
-
+                        <p class="text-center">{{this.original_title}}</p>
                     </a>
                 </div>
             </div>
